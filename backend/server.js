@@ -12,6 +12,12 @@ app.use(cors({ origin: true, credentials: true }));
 
 app.get('/', (req, res) => res.send('🚀 Backend server is running successfully!'));
 
+app.get('/api/test-key', (req, res) => {
+  const key = process.env.OPENROUTER_API_KEY;
+  if (!key) return res.status(500).json({ status: '❌ API key missing in environment' });
+  res.json({ status: '✅ API key found', prefix: key.substring(0, 10) + '...' });
+});
+
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('✅ MongoDB connected'))
   .catch((err) => console.log('⚠️ MongoDB error:', err.message));
@@ -54,11 +60,15 @@ async function askAI(prompt, apiKey) {
         return text;
       }
     } catch (err) {
-      console.log(`⚠️ ${model} failed:`, err.response?.data?.error?.message || err.message);
+      const errorMsg = err.response?.data?.error?.message || err.message;
+      console.log(`⚠️ ${model} failed:`, errorMsg);
+      if (errorMsg.includes('User not found')) {
+        throw new Error('API key is invalid (User not found). Check Render settings.');
+      }
     }
   }
 
-  throw new Error('All AI models failed');
+  throw new Error('All AI models failed. Please check your OpenRouter credits or API key settings.');
 }
 
 app.post('/api/ask-ai', async (req, res) => {
