@@ -43,7 +43,7 @@ async function askAI(prompt, apiKey) {
           headers: {
             Authorization: `Bearer ${apiKey}`,
             'Content-Type': 'application/json',
-            'HTTP-Referer': 'http://localhost:5173',
+            'HTTP-Referer': 'https://tech-assisment.vercel.app',
             'X-Title': 'MERN AI Flow',
           },
         }
