@@ -10,7 +10,7 @@ import axios from 'axios';
 import { Play, Save, Loader2, Sparkles, BrainCircuit, Bot, Database, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const API = 'https://tech-assisment-2x4d.vercel.app/api';
+const API = 'http://localhost:5000/api';
 
 function InputNode({ data }) {
   return (

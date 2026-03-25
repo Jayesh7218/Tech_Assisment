@@ -29,15 +29,13 @@ const Prompt = mongoose.model('Prompt', new mongoose.Schema({
 }));
 
 async function askAI(prompt, apiKey) {
-  const allModels = [
-    'openrouter/auto',
-    'google/gemini-2.0-flash-exp:free',
-    'google/gemini-flash-1.5:free',
-    'meta-llama/llama-3.3-70b-instruct:free',
+  const models = [
+    'google/gemini-2.0-flash-001',
+    'openai/gpt-4o-mini',
+    'deepseek/deepseek-chat',
+    'google/gemini-2.0-flash-lite-preview-02-05:free',
     'mistralai/mistral-7b-instruct:free'
   ];
-
-  const models = allModels.sort(() => Math.random() - 0.5);
 
   for (const model of models) {
     try {
@@ -49,7 +47,7 @@ async function askAI(prompt, apiKey) {
           headers: {
             Authorization: `Bearer ${apiKey}`,
             'Content-Type': 'application/json',
-            'HTTP-Referer': 'https://tech-assisment.vercel.app',
+            'HTTP-Referer': 'http://localhost:5173',
             'X-Title': 'MERN AI Flow',
           },
         }
