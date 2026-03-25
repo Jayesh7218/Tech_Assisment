@@ -3,18 +3,18 @@ import {
   ReactFlow, Background, Controls,
   applyEdgeChanges, applyNodeChanges,
   Handle, Position,
-} 
-from '@xyflow/react';
+}
+  from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import axios from 'axios';
 import { Play, Save, Loader2, Sparkles, BrainCircuit, Bot, Database, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const API = 'https://tech-assisment-gtwj.vercel.app/api';
+const API = 'https://tech-assisment-2x4d.vercel.app/api';
 
 function InputNode({ data }) {
   return (
-    <motion.div 
+    <motion.div
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       className="node-card" >
@@ -24,15 +24,15 @@ function InputNode({ data }) {
         </div>
         <Zap size={14} color="#818cf8" style={{ opacity: 0.6 }} />
       </div>
-      
+
       <textarea
         className="node-input nodrag nowheel"
         placeholder="Type here..."
         value={data.prompt || ''}
         onChange={(e) => data.onChange(e.target.value)}
-        onMouseDown={(e) => e.stopPropagation()} 
+        onMouseDown={(e) => e.stopPropagation()}
         onClick={(e) => e.target.focus()}
-        style={{ cursor: 'text' }}/>
+        style={{ cursor: 'text' }} />
       <Handle type="source" position={Position.Bottom} />
     </motion.div>
   );
@@ -40,7 +40,7 @@ function InputNode({ data }) {
 
 function ResultNode({ data }) {
   return (
-    <motion.div 
+    <motion.div
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       className="node-card">
@@ -50,11 +50,11 @@ function ResultNode({ data }) {
           <Bot size={16} color="#818cf8" /> AI Response
         </div>
       </div>
-      
+
       <div className="node-result">
         <AnimatePresence mode="wait">
           {data.loading ? (
-            <motion.div 
+            <motion.div
               key="loading"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -83,17 +83,17 @@ function ResultNode({ data }) {
 const nodeTypes = { input: InputNode, result: ResultNode };
 
 const defaultNodes = [
-  { id: '1', type: 'input',  position: { x: 250, y: 50 },  data: { prompt: '', onChange: () => {} } },
+  { id: '1', type: 'input', position: { x: 250, y: 50 }, data: { prompt: '', onChange: () => { } } },
   { id: '2', type: 'result', position: { x: 250, y: 350 }, data: { response: '', loading: false } },
 ];
 
 const defaultEdges = [
-  { 
-    id: 'e1-2', 
-    source: '1', 
-    target: '2', 
+  {
+    id: 'e1-2',
+    source: '1',
+    target: '2',
     animated: true,
-    style: { stroke: '#38bdf8', strokeWidth: 3, filter: 'drop-shadow(0 0 8px rgba(56, 189, 248, 0.4))' } 
+    style: { stroke: '#38bdf8', strokeWidth: 3, filter: 'drop-shadow(0 0 8px rgba(56, 189, 248, 0.4))' }
   },
 ];
 
@@ -122,7 +122,7 @@ export default function App() {
 
   const runFlow = async () => {
     if (!prompt.trim()) return alert('Please provide a prompt first.');
-    
+
     setLoading(true);
     updateNode('2', { loading: true, response: '' });
 
@@ -150,7 +150,7 @@ export default function App() {
 
   return (
     <div className="app-container">
-      <motion.header 
+      <motion.header
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 100 }}
@@ -159,7 +159,7 @@ export default function App() {
           <Sparkles size={26} color="#38bdf8" />
           <span>AI Flow Studio</span>
         </div>
-        
+
         <div className="btn-group">
           <button className="btn btn-save" onClick={save} disabled={loading}>
             <Database size={18} /> Save
@@ -171,7 +171,7 @@ export default function App() {
         </div>
       </motion.header>
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
@@ -185,12 +185,12 @@ export default function App() {
           fitView
           panOnScroll
           selectionOnDrag>
-          <Background 
-            color="#1e293b" 
-            variant="dots" 
-            gap={25} 
-            size={1.5} 
-            style={{ opacity: 0.4 }}/>
+          <Background
+            color="#1e293b"
+            variant="dots"
+            gap={25}
+            size={1.5}
+            style={{ opacity: 0.4 }} />
           <Controls />
         </ReactFlow>
       </motion.div>
